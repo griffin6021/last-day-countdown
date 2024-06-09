@@ -20,17 +20,20 @@ func main() {
 
 	// Loop until target time is reached
 	for duration > 0 {
-		// Format remaining duration
-		days := duration.Hours() / 24
+		// **Fix for days calculation**
+		days := int(duration.Hours() / 24) // Convert hours to whole days (cast to int)
 		hours := int(duration.Hours()) % 24
 		minutes := int(duration.Minutes()) % 60
 		seconds := int(duration.Seconds()) % 60
 
 		// Print remaining time
-		fmt.Printf("- %d days, %d hours, %d minutes, %d seconds remaining\n", days, hours, minutes, seconds)
+		fmt.Printf("  - %d days, %d hours, %d minutes, %d seconds remaining\n", days, hours, minutes, seconds)
 
 		// Sleep for 1 second
 		time.Sleep(1 * time.Second)
+
+		// Recalculate remaining duration
+		duration = targetTime.Sub(time.Now())
 	}
 
 	// Print message when target time is reached
